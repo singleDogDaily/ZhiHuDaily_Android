@@ -12,6 +12,8 @@ public interface WelcomeContract {
     interface View extends BaseView<Presenter>{
 
         void loadImage(String img);
+
+        void loadFailed();
     }
 
     interface Presenter extends BasePresenter{

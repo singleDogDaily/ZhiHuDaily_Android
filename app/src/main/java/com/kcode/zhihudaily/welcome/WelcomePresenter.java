@@ -1,13 +1,7 @@
 package com.kcode.zhihudaily.welcome;
 
-import android.util.Log;
-
 import com.kcode.zhihudaily.bean.Welcome;
-import com.kcode.zhihudaily.net.ApiClient;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.kcode.zhihudaily.net.HttpHelper;
 
 /**
  * Created by caik on 2016/10/27.
@@ -25,17 +19,15 @@ public class WelcomePresenter implements WelcomeContract.Presenter {
     @Override
     public void start() {
 
-        Call<Welcome> call = ApiClient.getClient().getStartImage();
-        call.enqueue(new Callback<Welcome>() {
+        HttpHelper.getStartImage(new com.kcode.zhihudaily.net.Response<Welcome>() {
             @Override
-            public void onResponse(Call<Welcome> call, Response<Welcome> response) {
-                Log.i("caik",response.body().getImg());
-                mView.loadImage(response.body().getImg());
+            public void onSuccess(Welcome welcome) {
+                mView.loadImage(welcome.getImg());
             }
 
             @Override
-            public void onFailure(Call<Welcome> call, Throwable t) {
-
+            public void onFailed(String msg) {
+                mView.loadFailed();
             }
         });
     }
