@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.kcode.zhihudaily.R;
 
@@ -22,12 +23,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         bindView();
     }
 
-    protected void initToolBar(String msg,int icon){
+    protected void initToolBar(String msg){
         Toolbar toolbar = $(R.id.toolbar);
         if (toolbar != null) {
-            setSupportActionBar(toolbar);
+
             toolbar.setTitle(msg);
-            toolbar.setLogo(icon);
+
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(BaseActivity.this,"111",Toast.LENGTH_LONG).show();
+                }
+            });
+
+
         }
     }
 

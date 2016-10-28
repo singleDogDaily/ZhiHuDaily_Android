@@ -10,12 +10,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initToolBar("首页");
+
     }
 
     @Override
     protected void setContentView() {
         setContentView(R.layout.activity_main);
-        initToolBar("首页",R.drawable.ic_menu_black_24dp);
     }
 
     @Override
