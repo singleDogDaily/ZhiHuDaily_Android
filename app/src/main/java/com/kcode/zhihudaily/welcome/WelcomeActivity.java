@@ -11,12 +11,16 @@ import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.BaseActivity;
 import com.kcode.zhihudaily.main.MainActivity;
 import com.kcode.zhihudaily.utils.ImageLoader;
+import com.kcode.zhihudaily.utils.L;
+import com.kcode.zhihudaily.utils.LogFactory;
 
 /**
  * Created by caik on 2016/10/27.
  */
 
 public class WelcomeActivity extends BaseActivity implements WelcomeContract.View {
+
+    private final static L log = LogFactory.create(WelcomeActivity.class);
 
     private ImageView mStartImage;
     private WelcomeContract.Presenter mPresenter;
@@ -63,6 +67,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
 
     @Override
     public void loadImage(String img) {
+        log.i(img);
         ImageLoader.getInstance().load(this,img,mStartImage);
         mHandler.postDelayed(new Runnable() {
             @Override
