@@ -2,34 +2,56 @@ package com.kcode.zhihudaily.net;
 
 import com.kcode.zhihudaily.bean.Welcome;
 
-import retrofit2.Call;
-import retrofit2.Callback;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 网络再封装一层。方便以后替换网络框架
- *
+ * <p>
  * Created by caik on 2016/10/28.
  */
 
 public class HttpHelper {
 
-    public static void getStartImage(final Response<Welcome> welcomeResponse){
-        Call<Welcome> call = ApiClient.getClient().getStartImage();
-        call.enqueue(new Callback<Welcome>() {
+    /**
+     * 获取加载也图片信息{@link Welcome}
+     *
+     * @param welcomeResponse 网络回调{@link Response}
+     */
+    public static void getStartImage(final Response<Welcome> welcomeResponse) {
+
+        request(ApiClient.getClient().getStartImage(), new Observer<Welcome>() {
+
             @Override
-            public void onResponse(Call<Welcome> call, retrofit2.Response<Welcome> response) {
-                if (response != null) {
-                    welcomeResponse.onSuccess(response.body());
-                }else {
-                    welcomeResponse.onFailed("加载失败");
-                }
+            public void onCompleted() {
 
             }
 
             @Override
-            public void onFailure(Call<Welcome> call, Throwable t) {
-                welcomeResponse.onFailed(t.toString());
+            public void onError(Throwable e) {
+                welcomeResponse.onFailed(e.toString());
+            }
+
+            @Override
+            public void onNext(Welcome welcome) {
+                welcomeResponse.onSuccess(welcome);
             }
         });
+
     }
+
+    /**
+     * 网络统一出口
+     * @param observable    被观察者{@link Observable}
+     * @param observer      观察者{@link Observer}
+     */
+    private static void request(Observable observable, Observer observer) {
+        observable
+                .subscribeOn(Schedulers.io())//网络请求放到IO线程中执行
+                .observeOn(AndroidSchedulers.mainThread())//返回结果运行在主线程
+                .subscribe(observer);
+    }
+
 }

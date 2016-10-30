@@ -2,6 +2,8 @@ package com.kcode.zhihudaily.welcome;
 
 import com.kcode.zhihudaily.bean.Welcome;
 import com.kcode.zhihudaily.net.HttpHelper;
+import com.kcode.zhihudaily.utils.L;
+import com.kcode.zhihudaily.utils.LogFactory;
 
 /**
  * Created by caik on 2016/10/27.
@@ -9,6 +11,7 @@ import com.kcode.zhihudaily.net.HttpHelper;
 
 public class WelcomePresenter implements WelcomeContract.Presenter {
 
+    private final static L log = LogFactory.create(WelcomePresenter.class);
     private WelcomeContract.View mView;
 
     public WelcomePresenter(WelcomeContract.View mView) {
@@ -27,6 +30,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter {
 
             @Override
             public void onFailed(String msg) {
+                log.e(msg);
                 mView.loadFailed();
             }
         });

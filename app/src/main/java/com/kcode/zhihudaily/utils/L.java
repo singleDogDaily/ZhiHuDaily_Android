@@ -57,37 +57,37 @@ public class L {
 
     public void d(String msg) {
         if (level <= LogFactory.DEBUG) {
-            Log.i(tag, msg == null ? "msg is null" : msg);
+            Log.d(tag, msg == null ? "msg is null" : msg);
         }
     }
 
     public void d(JSONObject object) {
         if (level <= LogFactory.DEBUG) {
-            Log.i(tag, object == null ? "object is null" : object.toString());
+            Log.d(tag, object == null ? "object is null" : object.toString());
         }
     }
 
     public void d(JSONArray array) {
         if (level <= LogFactory.DEBUG) {
-            Log.i(tag, array == null ? "array is null" : array.toString());
+            Log.d(tag, array == null ? "array is null" : array.toString());
         }
     }
 
     public void e(String msg) {
         if (level <= LogFactory.ERROR) {
-            Log.i(tag, msg == null ? "msg is null" : msg);
+            Log.e(tag, msg == null ? "msg is null" : msg);
         }
     }
 
     public void e(JSONObject object) {
         if (level <= LogFactory.ERROR) {
-            Log.i(tag, object == null ? "object is null" : object.toString());
+            Log.e(tag, object == null ? "object is null" : object.toString());
         }
     }
 
     public void e(JSONArray array) {
         if (level <= LogFactory.ERROR) {
-            Log.i(tag, array == null ? "array is null" : array.toString());
+            Log.e(tag, array == null ? "array is null" : array.toString());
         }
     }
 
