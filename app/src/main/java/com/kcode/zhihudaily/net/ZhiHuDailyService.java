@@ -1,6 +1,7 @@
 package com.kcode.zhihudaily.net;
 
 
+import com.kcode.zhihudaily.bean.LatestNews;
 import com.kcode.zhihudaily.bean.Welcome;
 
 import retrofit2.http.GET;
@@ -17,6 +18,9 @@ public interface ZhiHuDailyService {
     Observable<Welcome> getStartImage();
 
     /**获取最新消息*/
+    @GET("api/4/news/latest")
+    Observable<LatestNews> getLatestNews();
+
     /**获取消息详情*/
     /**获取过往消息*/
     /**获取新闻额外信息（如评论数量，所获的『赞』的数量）*/

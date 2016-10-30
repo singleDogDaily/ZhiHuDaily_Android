@@ -1,5 +1,6 @@
 package com.kcode.zhihudaily.net;
 
+import com.kcode.zhihudaily.bean.LatestNews;
 import com.kcode.zhihudaily.bean.Welcome;
 
 import rx.Observable;
@@ -40,6 +41,31 @@ public class HttpHelper {
             }
         });
 
+    }
+
+    /**
+     * 获取最新信息{@link Welcome}
+     *
+     * @param response 网络回调{@link Response}
+     */
+    public static void getLatestNews(final Response<LatestNews> response){
+        request(ApiClient.getClient().getLatestNews(),new Observer<LatestNews>(){
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                response.onFailed(e.toString());
+            }
+
+            @Override
+            public void onNext(LatestNews latestNews) {
+                response.onSuccess(latestNews);
+            }
+        });
     }
 
     /**

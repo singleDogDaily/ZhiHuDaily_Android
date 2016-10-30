@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.kcode.zhihudaily.R;
 
@@ -24,7 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         bindView();
     }
 
-    protected void initToolBar(String msg){
+    protected void initToolBar(String msg, final ToolbarOnClickListener listener) {
         Toolbar toolbar = $(R.id.toolbar);
         if (toolbar != null) {
 
@@ -35,7 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(BaseActivity.this,"111",Toast.LENGTH_LONG).show();
+                    if (listener != null) {
+                        listener.onClick();
+                    }
                 }
             });
 
@@ -44,19 +45,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract void setContentView();
+
     protected abstract void bindView();
 
-    protected <T extends View> T $(int id){
+    protected <T extends View> T $(int id) {
         return (T) findViewById(id);
     }
 
-    protected void startActivity(Class<?> cls){
-        Intent intent = new Intent(this,cls);
+    protected void startActivity(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 
-    protected void startActivityAndFinish(Class<?> cls){
+    protected void startActivityAndFinish(Class<?> cls) {
         startActivity(cls);
         finish();
+    }
+
+    public interface ToolbarOnClickListener {
+        void onClick();
     }
 }

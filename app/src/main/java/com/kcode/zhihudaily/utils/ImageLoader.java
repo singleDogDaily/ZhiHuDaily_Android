@@ -1,6 +1,7 @@
 package com.kcode.zhihudaily.utils;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -34,5 +35,9 @@ public class ImageLoader {
 
     public void load(Context context, File file, ImageView view){
         Glide.with(context).load(file).into(view);
+    }
+
+    public void load(Fragment fragment, String url, ImageView view){
+        Glide.with(fragment).load(url).into(view);
     }
 }
