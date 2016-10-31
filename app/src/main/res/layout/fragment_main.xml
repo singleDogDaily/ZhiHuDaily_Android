@@ -8,14 +8,29 @@
     android:layout_height="match_parent"
     tools:context="com.kcode.zhihudaily.main.MainActivity">
 
-    <com.kcode.autoscrollviewpager.view.AutoScrollViewPager
-        android:id="@+id/viewPager"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        app:point_layout="center">
+                                                  android:layout_height="wrap_content">
 
-    </com.kcode.autoscrollviewpager.view.AutoScrollViewPager>
 
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <com.kcode.autoscrollviewpager.view.AutoScrollViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                app:point_layout="center">
+
+            </com.kcode.autoscrollviewpager.view.AutoScrollViewPager>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"

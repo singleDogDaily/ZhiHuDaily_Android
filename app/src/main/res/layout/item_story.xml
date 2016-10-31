@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="12dp"
+              android:paddingBottom="12dp">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:textColor="#3a3a3a"
+        android:textSize="14sp"
+        tools:text="今日热闻"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/item_story_margin"
+        android:layout_marginRight="@dimen/item_story_margin"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/selector_item_story"
+        app:cardCornerRadius="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/item_height"
+            android:padding="@dimen/item_story_margin">
+
+            <ImageView
+                android:id="@+id/img_icon"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/ic_launcher"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/item_story_margin"
+                android:layout_toLeftOf="@id/img_icon"
+                android:maxLines="3"
+                android:textColor="#FF3E3D3D"
+                android:textSize="18sp"
+                tools:text="周游世界，吃喝玩乐"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

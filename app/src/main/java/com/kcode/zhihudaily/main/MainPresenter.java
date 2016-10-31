@@ -18,14 +18,17 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void loadData() {
+    public void loadData(final boolean isRefresh) {
         mView.showLoading();
         HttpHelper.getLatestNews(new Response<LatestNews>() {
             @Override
             public void onSuccess(LatestNews latestNews) {
                 mView.setUpViewPager(latestNews.getTop_stories());
-                mView.setUpRecyclerView();
+                mView.setUpRecyclerView(latestNews.getStories(),isRefresh);
                 mView.dismissLoading();
+                if (isRefresh) {
+                    mView.onFinishRefresh();
+                }
             }
 
             @Override
@@ -36,7 +39,12 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void start() {
+    public void onRefresh() {
+        loadData(true);
+    }
 
+    @Override
+    public void start() {
+        loadData(false);
     }
 }

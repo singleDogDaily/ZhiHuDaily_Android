@@ -2,6 +2,7 @@ package com.kcode.zhihudaily.main;
 
 import com.kcode.zhihudaily.base.BasePresenter;
 import com.kcode.zhihudaily.base.BaseView;
+import com.kcode.zhihudaily.bean.Story;
 import com.kcode.zhihudaily.bean.TopStory;
 
 import java.util.List;
@@ -22,11 +23,14 @@ public interface MainContract {
         /**加载结束*/
         void dismissLoading();
         /**展示列表数据*/
-        void setUpRecyclerView();
-
+        void setUpRecyclerView(List<Story> stories,boolean isRefresh);
+        /**刷新完成*/
+        void onFinishRefresh();
     }
 
     interface Presenter extends BasePresenter{
-        void loadData();
+        void loadData(boolean isRefresh);
+
+        void onRefresh();
     }
 }
