@@ -23,8 +23,8 @@ public class MainPresenter implements MainContract.Presenter {
         HttpHelper.getLatestNews(new Response<LatestNews>() {
             @Override
             public void onSuccess(LatestNews latestNews) {
-                mView.setUpViewPager(latestNews.getTop_stories());
                 mView.setUpRecyclerView(latestNews.getStories(),isRefresh);
+                mView.setUpViewPager(latestNews.getTop_stories());
                 mView.dismissLoading();
                 if (isRefresh) {
                     mView.onFinishRefresh();

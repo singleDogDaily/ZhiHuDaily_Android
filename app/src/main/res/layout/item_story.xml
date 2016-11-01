@@ -5,14 +5,14 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="12dp"
-              android:paddingBottom="12dp">
+              android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
         android:textColor="#3a3a3a"
         android:textSize="14sp"
         tools:text="今日热闻"/>
@@ -23,8 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/item_story_margin"
         android:layout_marginRight="@dimen/item_story_margin"
-        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/selector_item_story"
+        android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="10dp">
 
 
@@ -36,8 +37,8 @@
 
             <ImageView
                 android:id="@+id/img_icon"
-                android:layout_width="80dp"
-                android:layout_height="60dp"
+                android:layout_width="86dp"
+                android:layout_height="76dp"
                 android:layout_alignParentRight="true"
                 android:background="@mipmap/ic_launcher"
                 android:scaleType="centerCrop"/>
@@ -47,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/item_story_margin"
+                android:layout_marginLeft="@dimen/item_story_margin"
                 android:layout_toLeftOf="@id/img_icon"
                 android:maxLines="3"
                 android:textColor="#FF3E3D3D"

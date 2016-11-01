@@ -21,6 +21,7 @@ public class Story {
     private String ga_prefix;
     private String title;
     private List<String> images;
+    private String date;
 
     public int getType() {
         return type;
@@ -60,5 +61,13 @@ public class Story {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -8,17 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.kcode.autoscrollviewpager.view.AutoScrollViewPager;
 import com.kcode.autoscrollviewpager.view.BaseViewPagerAdapter;
 import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.BaseFragment;
 import com.kcode.zhihudaily.bean.Story;
 import com.kcode.zhihudaily.bean.TopStory;
-import com.kcode.zhihudaily.utils.ImageLoader;
 import com.kcode.zhihudaily.utils.L;
 import com.kcode.zhihudaily.utils.LogFactory;
 
@@ -34,8 +30,6 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
 
     private MainContract.Presenter mPresenter;
     private ProgressBar mProgressBar;
-    private AutoScrollViewPager mViewPager;
-    private BaseViewPagerAdapter<TopStory> mAdapter;
 
     private RecyclerView mRecyclerView;
     private MainStoryAdapter mMainStoryAdapter;
@@ -56,16 +50,15 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewPager = (AutoScrollViewPager) view.findViewById(R.id.viewPager);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayout);
         mSwipeLayout.setOnRefreshListener(this);
 
-        initViewPager();
         initRecyclerView();
-
-        mPresenter.start();
+        if (mPresenter != null) {
+            mPresenter.start();
+        }
 
     }
 
@@ -75,38 +68,20 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
         mRecyclerView.setAdapter(mMainStoryAdapter);
     }
 
-    private void initViewPager(){
-        mAdapter = new BaseViewPagerAdapter<TopStory>(getActivity(),mListener) {
-            @Override
-            public void loadImage(ImageView view, int position, TopStory topStory) {
-                ImageLoader.getInstance().load(MainFragment.this, topStory.getImage(), view);
-            }
-
-            @Override
-            public void setSubTitle(TextView textView, int position, TopStory topStory) {
-                textView.setText(topStory.getTitle());
-            }
-        };
-
-        mViewPager.setAdapter(mAdapter);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        mViewPager.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mViewPager.onPause();
     }
 
     @Override
     public void setUpViewPager(final List<TopStory> topStories) {
-        if (mAdapter != null) {
-            mAdapter.init(topStories);
+        if (mMainStoryAdapter != null) {
+            mMainStoryAdapter.addHeaderView(topStories);
         }
     }
 
@@ -123,6 +98,10 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
     @Override
     public void setUpRecyclerView(List<Story> stories,boolean isRefresh) {
         if (mMainStoryAdapter != null) {
+            if (stories != null && stories.size() != 0) {
+                stories.get(0).setDate("今日热闻");
+            }
+
             mMainStoryAdapter.addStories(stories,isRefresh);
         }
     }
