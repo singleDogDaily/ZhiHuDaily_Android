@@ -26,11 +26,15 @@ public interface MainContract {
         void setUpRecyclerView(List<Story> stories,boolean isRefresh);
         /**刷新完成*/
         void onFinishRefresh();
+
+        void setToolbarTitle(String title);
     }
 
     interface Presenter extends BasePresenter{
         void loadData(boolean isRefresh);
 
         void onRefresh();
+
+        void loadMore(String date);
     }
 }

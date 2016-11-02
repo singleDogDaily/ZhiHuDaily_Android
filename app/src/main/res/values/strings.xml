@@ -14,5 +14,5 @@
     <string name="action_settings">设置选项</string>
     <string name="night_model">夜间模式</string>
     <string name="day_model">日间模式</string>
-    <string name="title_main">首页</string>
+    <string name="title_main">今日热闻</string>
 </resources>

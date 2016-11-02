@@ -44,6 +44,21 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void loadMore(String date) {
+        HttpHelper.getBeforeNews(date,new Response<LatestNews>() {
+            @Override
+            public void onSuccess(LatestNews latestNews) {
+                mView.setUpRecyclerView(latestNews.getStories(),false);
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                mView.dismissLoading();
+            }
+        });
+    }
+
+    @Override
     public void start() {
         loadData(false);
     }

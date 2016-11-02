@@ -1,18 +1,8 @@
 package com.kcode.zhihudaily.main;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -32,8 +22,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity{
 
+    private Toolbar mToolbar;
     private final static L log = LogFactory.create(MainActivity.class);
 
     private MenuItem menuItem;
@@ -49,29 +40,25 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_main);
-        setSupportActionBar(toolbar);
-
-        linearLayout = $(R.id.linearLayout);
+        mToolbar  = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.title_main);
+        setSupportActionBar(mToolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.title_main, R.string.navigation_drawer_close);
+                this,drawer,mToolbar,R.string.title_main,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         //add fragment
-        fragment = MainFragment.newInstance();
+        MainFragment fragment = MainFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, fragment)
+                .add(R.id.container,fragment)
                 .commit();
 
         //create presenter
         new MainPresenter(fragment);
-
-
     }
 
     @Override
@@ -127,6 +114,16 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setToolbarTitle(String title){
+        if (mToolbar != null) {
+           mToolbar.setTitle(title);
+        }
+    }
+
+    public String getToolbarTitle() {
+        return mToolbar.getTitle().toString();
     }
 
 
