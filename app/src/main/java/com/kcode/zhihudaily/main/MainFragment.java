@@ -31,7 +31,7 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
     private MainContract.Presenter mPresenter;
     private ProgressBar mProgressBar;
 
-    private RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerView;
     private MainStoryAdapter mMainStoryAdapter;
 
     private SwipeRefreshLayout mSwipeLayout;
@@ -53,6 +53,7 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayout);
+        mSwipeLayout.setColorSchemeColors(getResources().getColor(R.color.base_blue));
         mSwipeLayout.setOnRefreshListener(this);
 
         initRecyclerView();

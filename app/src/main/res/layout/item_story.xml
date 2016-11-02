@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ll_item_story"
+              android:background="?attr/clockBackground"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
@@ -13,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:textColor="#3a3a3a"
+        android:textColor="?attr/clockTextColor2"
         android:textSize="14sp"
         tools:text="今日热闻"/>
 
@@ -25,11 +27,13 @@
         android:layout_marginRight="@dimen/item_story_margin"
         android:layout_marginBottom="5dp"
         android:background="@drawable/selector_item_story"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="?attr/clockBackground"
+        android:foreground="?android:attr/selectableItemBackground">
 
 
         <RelativeLayout
+            android:id="@+id/rl_item_story"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/item_height"
@@ -51,7 +55,7 @@
                 android:layout_marginLeft="@dimen/item_story_margin"
                 android:layout_toLeftOf="@id/img_icon"
                 android:maxLines="3"
-                android:textColor="#FF3E3D3D"
+                android:textColor="?attr/clockTextColor"
                 android:textSize="18sp"
                 tools:text="周游世界，吃喝玩乐"/>
 

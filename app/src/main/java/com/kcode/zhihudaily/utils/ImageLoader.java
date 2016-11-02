@@ -30,7 +30,8 @@ public class ImageLoader {
     }
 
     public void load(Context context,String url, ImageView view){
-        Glide.with(context).load(url).into(view);
+        //CenterCrop拉伸填充
+        Glide.with(context).load(url).centerCrop().into(view);
     }
 
     public void load(Context context, File file, ImageView view){
