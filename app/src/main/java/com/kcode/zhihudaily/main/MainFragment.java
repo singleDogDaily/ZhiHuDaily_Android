@@ -15,6 +15,7 @@ import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.BaseFragment;
 import com.kcode.zhihudaily.bean.Story;
 import com.kcode.zhihudaily.bean.TopStory;
+import com.kcode.zhihudaily.utils.DateUtils;
 import com.kcode.zhihudaily.utils.L;
 import com.kcode.zhihudaily.utils.LogFactory;
 
@@ -24,7 +25,8 @@ import java.util.List;
  * Created by caik on 2016/10/30.
  */
 
-public class MainFragment extends BaseFragment implements MainContract.View ,SwipeRefreshLayout.OnRefreshListener,MainStoryAdapter.OnItemClickListener{
+public class MainFragment extends BaseFragment implements MainContract.View ,
+        SwipeRefreshLayout.OnRefreshListener,MainStoryAdapter.OnItemClickListener{
 
     private final static L log = LogFactory.create(MainFragment.class);
 
@@ -32,9 +34,11 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
     private ProgressBar mProgressBar;
 
     private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
     private MainStoryAdapter mMainStoryAdapter;
 
     private SwipeRefreshLayout mSwipeLayout;
+    private int mCurrentPage = 0;//当前时间，今日热闻为0
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -64,8 +68,28 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
 
     private void initRecyclerView() {
         mMainStoryAdapter = new MainStoryAdapter(getContext(),this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mMainStoryAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState){
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        log.i("SCROLL_STATE_IDLE");
+                        int index = mLayoutManager.findFirstVisibleItemPosition();
+                        setToolbarTitle(mMainStoryAdapter.getItem(index).getHideDate());
+                        float f = (float)index / mMainStoryAdapter.getItemCount();
+                        if ((float)index / mMainStoryAdapter.getItemCount() > 0.5f){
+                            //滑动距离过半，继续加载更多数据
+                            loadMore();
+                        }
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -98,12 +122,26 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
     @Override
     public void setUpRecyclerView(List<Story> stories,boolean isRefresh) {
         if (mMainStoryAdapter != null) {
-            if (stories != null && stories.size() != 0) {
-                stories.get(0).setDate("今日热闻");
+            if (stories != null && stories.size() != 0 ) {
+                if (mCurrentPage == 0){
+                    stories.get(0).setDate(getToolbarTitle());
+                    setHideDate(stories,getToolbarTitle());
+                }else {
+                    stories.get(0).setDate(DateUtils.long2MMdd(DateUtils.str2Long(DateUtils.getToday()) + (mCurrentPage * 24*60*60*1000)));
+                    setHideDate(stories,stories.get(0).getDate());
+                }
             }
 
             mMainStoryAdapter.addStories(stories,isRefresh);
+
         }
+    }
+
+    private void loadMore() {
+        mCurrentPage--;
+
+        String date = DateUtils.long2Str(DateUtils.str2Long(DateUtils.getToday()) + (mCurrentPage * 24*60*60*1000));
+        mPresenter.loadMore(date);
     }
 
     @Override
@@ -114,7 +152,13 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
     }
 
     @Override
+    public void setToolbarTitle(String title) {
+        ((MainActivity)getActivity()).setToolbarTitle(title);
+    }
+
+    @Override
     public void onRefresh() {
+        mCurrentPage = 0;
         mPresenter.onRefresh();
     }
 
@@ -133,5 +177,18 @@ public class MainFragment extends BaseFragment implements MainContract.View ,Swi
     @Override
     public void onItemClick(int position) {
 
+    }
+
+    public String getToolbarTitle(){
+        return ((MainActivity)getActivity()).getToolbarTitle();
+    }
+
+    private void setHideDate(List<Story> stories,String hideDate){
+        if (stories == null) {
+            return;
+        }
+        for (Story story:stories) {
+            story.setHideDate(hideDate);
+        }
     }
 }

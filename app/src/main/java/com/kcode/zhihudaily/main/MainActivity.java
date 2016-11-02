@@ -12,17 +12,18 @@ import com.kcode.zhihudaily.base.BaseActivity;
 
 public class MainActivity extends BaseActivity{
 
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar  = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_main);
-        setSupportActionBar(toolbar);
+        mToolbar  = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.title_main);
+        setSupportActionBar(mToolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,drawer,toolbar,R.string.title_main,R.string.navigation_drawer_close);
+                this,drawer,mToolbar,R.string.title_main,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -56,5 +57,15 @@ public class MainActivity extends BaseActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setToolbarTitle(String title){
+        if (mToolbar != null) {
+           mToolbar.setTitle(title);
+        }
+    }
+
+    public String getToolbarTitle() {
+        return mToolbar.getTitle().toString();
     }
 }

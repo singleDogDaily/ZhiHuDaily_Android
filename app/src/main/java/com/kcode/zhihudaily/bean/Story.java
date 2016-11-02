@@ -22,6 +22,7 @@ public class Story {
     private String title;
     private List<String> images;
     private String date;
+    private String hideDate;
 
     public int getType() {
         return type;
@@ -69,5 +70,13 @@ public class Story {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getHideDate() {
+        return hideDate;
+    }
+
+    public void setHideDate(String hideDate) {
+        this.hideDate = hideDate;
     }
 }

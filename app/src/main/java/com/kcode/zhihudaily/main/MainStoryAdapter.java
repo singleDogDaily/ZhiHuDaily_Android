@@ -48,6 +48,7 @@ public class MainStoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.mTopStories = topStories;
         Story story = new Story();
         story.setTitle(CommonData.HEADER_VIEW);
+        story.setHideDate(mContext.getResources().getString(R.string.title_main));
         mStories.add(0,story);
         notifyDataSetChanged();
     }
@@ -78,6 +79,10 @@ public class MainStoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         story.setTitle(CommonData.HEADER_VIEW);
         story.setId(11);
         notifyItemChanged(0);
+    }
+
+    public Story getItem(int position){
+        return mStories.get(position);
     }
 
     @Override
