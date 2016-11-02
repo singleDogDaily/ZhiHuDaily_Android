@@ -1,8 +1,18 @@
 package com.kcode.zhihudaily.main;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -22,7 +32,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     private Toolbar mToolbar;
     private final static L log = LogFactory.create(MainActivity.class);
@@ -31,7 +41,6 @@ public class MainActivity extends BaseActivity{
     private SharedPreferences spf;
 
 
-    private Toolbar toolbar;
     private LinearLayout linearLayout;
 
     private MainFragment fragment;
@@ -40,21 +49,23 @@ public class MainActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mToolbar  = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.title_main);
         setSupportActionBar(mToolbar);
 
+        linearLayout = $(R.id.linearLayout);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,drawer,mToolbar,R.string.title_main,R.string.navigation_drawer_close);
+                this, drawer, mToolbar, R.string.title_main, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         //add fragment
-        MainFragment fragment = MainFragment.newInstance();
+        fragment = MainFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container,fragment)
+                .add(R.id.container, fragment)
                 .commit();
 
         //create presenter
@@ -116,9 +127,9 @@ public class MainActivity extends BaseActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void setToolbarTitle(String title){
+    public void setToolbarTitle(String title) {
         if (mToolbar != null) {
-           mToolbar.setTitle(title);
+            mToolbar.setTitle(title);
         }
     }
 
@@ -144,15 +155,18 @@ public class MainActivity extends BaseActivity{
 
         TypedValue background = new TypedValue();//背景色
         TypedValue textColor = new TypedValue();//字体颜色
+        TypedValue textColor2 = new TypedValue();//今日热闻字体颜色
         TypedValue barBackground = new TypedValue();//ActionBar背景色
+
 
         Resources.Theme theme = getTheme();
         theme.resolveAttribute(R.attr.clockBackground, background, true);
         theme.resolveAttribute(R.attr.clockTextColor, textColor, true);
+        theme.resolveAttribute(R.attr.clockTextColor2, textColor2, true);
         theme.resolveAttribute(R.attr.clockBarBackground, barBackground, true);
 
 
-        toolbar.setBackgroundResource(barBackground.resourceId);
+        mToolbar.setBackgroundResource(barBackground.resourceId);
         linearLayout.setBackgroundResource(background.resourceId);
 
         int childCount = fragment.mRecyclerView.getChildCount();
