@@ -2,6 +2,7 @@ package com.kcode.zhihudaily.main;
 
 import com.kcode.zhihudaily.base.BasePresenter;
 import com.kcode.zhihudaily.base.BaseView;
+import com.kcode.zhihudaily.bean.LatestNews;
 import com.kcode.zhihudaily.bean.Story;
 import com.kcode.zhihudaily.bean.TopStory;
 
@@ -36,5 +37,7 @@ public interface MainContract {
         void onRefresh();
 
         void loadMore(String date);
+
+        LatestNews loadFromRealm();
     }
 }

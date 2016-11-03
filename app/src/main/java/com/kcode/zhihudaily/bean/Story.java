@@ -1,12 +1,13 @@
 package com.kcode.zhihudaily.bean;
 
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 /**
  * Created by caik on 2016/10/30.
  */
 
-public class Story {
+public class Story extends RealmObject{
 
     /**
      * images : ["http://pic2.zhimg.com/608c2a3c9afc8c714e3b394f3b4defad.jpg"]
@@ -20,7 +21,7 @@ public class Story {
     private int id;
     private String ga_prefix;
     private String title;
-    private List<String> images;
+    private RealmList<RealmString> images;
     private String date;
     private String hideDate;
 
@@ -56,11 +57,11 @@ public class Story {
         this.title = title;
     }
 
-    public List<String> getImages() {
+    public RealmList<RealmString> getImages() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(RealmList<RealmString> images) {
         this.images = images;
     }
 

@@ -2,14 +2,17 @@ package com.kcode.zhihudaily.bean;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
 /**
  * Created by caik on 2016/10/30.
  */
 
-public class LatestNews {
+public class LatestNews extends RealmObject {
     private String date;
-    private List<Story> stories;
-    private List<TopStory> top_stories;
+    private RealmList<Story> stories;
+    private RealmList<TopStory> top_stories;
 
     public String getDate() {
         return date;
@@ -23,7 +26,7 @@ public class LatestNews {
         return stories;
     }
 
-    public void setStories(List<Story> stories) {
+    public void setStories(RealmList<Story> stories) {
         this.stories = stories;
     }
 
@@ -31,7 +34,7 @@ public class LatestNews {
         return top_stories;
     }
 
-    public void setTop_stories(List<TopStory> top_stories) {
+    public void setTop_stories(RealmList<TopStory> top_stories) {
         this.top_stories = top_stories;
     }
 }

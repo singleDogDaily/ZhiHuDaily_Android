@@ -2,10 +2,12 @@ package com.kcode.zhihudaily.net;
 
 import com.kcode.zhihudaily.bean.LatestNews;
 import com.kcode.zhihudaily.bean.Welcome;
+import com.kcode.zhihudaily.db.RealmHelper;
 
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -48,8 +50,8 @@ public class HttpHelper {
      *
      * @param response 网络回调{@link Response}
      */
-    public static void getLatestNews(final Response<LatestNews> response){
-        request(ApiClient.getClient().getLatestNews(),new Observer<LatestNews>(){
+    public static void getLatestNews(final Response<LatestNews> response) {
+        request(ApiClient.getClient().getLatestNews(), new Observer<LatestNews>() {
 
             @Override
             public void onCompleted() {
@@ -71,33 +73,46 @@ public class HttpHelper {
     /**
      * 获取最新信息{@link LatestNews}
      *
-     * @param date  日期（格式：yyyyMMdd）
+     * @param date     日期（格式：yyyyMMdd）
      * @param response 网络回调{@link Response}
      */
-    public static void getBeforeNews(String date,final Response<LatestNews> response){
-        request(ApiClient.getClient().getLatestNews(),new Observer<LatestNews>(){
+    public static void getBeforeNews(String date, final Response<LatestNews> response) {
 
-            @Override
-            public void onCompleted() {
+        ApiClient.getClient().getLatestNews()
+                .doOnNext(new Action1<LatestNews>() {
+                    @Override
+                    public void call(LatestNews latestNews) {
+                        RealmHelper.getInstance().insertOrUpdate(latestNews);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LatestNews>() {
 
-            }
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onError(Throwable e) {
-                response.onFailed(e.toString());
-            }
+                    }
 
-            @Override
-            public void onNext(LatestNews latestNews) {
-                response.onSuccess(latestNews);
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        response.onFailed(e.toString());
+                    }
+
+                    @Override
+                    public void onNext(LatestNews latestNews) {
+                        response.onSuccess(latestNews);
+                    }
+                });
+
+
     }
 
     /**
      * 网络统一出口
-     * @param observable    被观察者{@link Observable}
-     * @param observer      观察者{@link Observer}
+     *
+     * @param observable 被观察者{@link Observable}
+     * @param observer   观察者{@link Observer}
      */
     private static void request(Observable observable, Observer observer) {
         observable

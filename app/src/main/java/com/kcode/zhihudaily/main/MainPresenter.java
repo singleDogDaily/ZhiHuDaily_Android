@@ -59,6 +59,11 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public LatestNews loadFromRealm() {
+        return null;
+    }
+
+    @Override
     public void start() {
         loadData(false);
     }
