@@ -1,5 +1,7 @@
 package com.kcode.zhihudaily.bean;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import io.realm.RealmList;
@@ -36,5 +38,11 @@ public class LatestNews extends RealmObject {
 
     public void setTop_stories(RealmList<TopStory> top_stories) {
         this.top_stories = top_stories;
+    }
+
+    @Override
+    public String toString() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

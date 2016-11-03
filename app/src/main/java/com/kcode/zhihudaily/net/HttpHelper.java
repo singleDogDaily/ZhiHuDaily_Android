@@ -2,7 +2,6 @@ package com.kcode.zhihudaily.net;
 
 import com.kcode.zhihudaily.bean.LatestNews;
 import com.kcode.zhihudaily.bean.Welcome;
-import com.kcode.zhihudaily.db.RealmHelper;
 
 import rx.Observable;
 import rx.Observer;
@@ -51,40 +50,44 @@ public class HttpHelper {
      * @param response 网络回调{@link Response}
      */
     public static void getLatestNews(final Response<LatestNews> response) {
-        request(ApiClient.getClient().getLatestNews(), new Observer<LatestNews>() {
 
-            @Override
-            public void onCompleted() {
+        ApiClient.getClient().getLatestNews()
+                .subscribeOn(Schedulers.io())
+                .doOnNext(new Action1<LatestNews>() {
+                    @Override
+                    public void call(LatestNews latestNews) {
+//                        RealmHelper.getInstance().insertOrUpdate(latestNews);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LatestNews>() {
 
-            }
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onError(Throwable e) {
-                response.onFailed(e.toString());
-            }
+                    }
 
-            @Override
-            public void onNext(LatestNews latestNews) {
-                response.onSuccess(latestNews);
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        response.onFailed(e.toString());
+                    }
+
+                    @Override
+                    public void onNext(LatestNews latestNews) {
+                        response.onSuccess(latestNews);
+                    }
+                });
     }
 
     /**
-     * 获取最新信息{@link LatestNews}
+     * 获取之前信息{@link LatestNews}
      *
      * @param date     日期（格式：yyyyMMdd）
      * @param response 网络回调{@link Response}
      */
     public static void getBeforeNews(String date, final Response<LatestNews> response) {
 
-        ApiClient.getClient().getLatestNews()
-                .doOnNext(new Action1<LatestNews>() {
-                    @Override
-                    public void call(LatestNews latestNews) {
-                        RealmHelper.getInstance().insertOrUpdate(latestNews);
-                    }
-                })
+        ApiClient.getClient().getBeforeNews(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<LatestNews>() {

@@ -43,8 +43,13 @@ public class RealmHelper {
         mRealm.commitTransaction();
     }
 
-    public List<LatestNews> getLatestNews(){
+    public LatestNews getLatestNews(){
+        mRealm.beginTransaction();
+        mRealm.delete(LatestNews.class);
         RealmQuery<LatestNews> query =  mRealm.where(LatestNews.class);
-        return query.findAll();
+        mRealm.commitTransaction();
+        List<LatestNews> result = query.findAll();
+
+        return (result == null || result.size() == 0) ? null : query.findAll().get(0);
     }
 }
