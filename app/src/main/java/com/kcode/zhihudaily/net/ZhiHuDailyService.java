@@ -2,6 +2,7 @@ package com.kcode.zhihudaily.net;
 
 
 import com.kcode.zhihudaily.bean.LatestNews;
+import com.kcode.zhihudaily.bean.Themes;
 import com.kcode.zhihudaily.bean.Welcome;
 
 import retrofit2.http.GET;
@@ -26,6 +27,10 @@ public interface ZhiHuDailyService {
     /**获取过往消息*/
     @GET("api/4/news/before/{date}")
     Observable<LatestNews> getBeforeNews(@Path("date") String date);
+
+    /**获取主题列表*/
+    @GET("api/4/themes")
+    Observable<Themes> getThemes();
 
     /**获取新闻额外信息（如评论数量，所获的『赞』的数量）*/
     /**新闻对应长评论查看*/

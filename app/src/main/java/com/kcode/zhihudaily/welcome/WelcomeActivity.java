@@ -21,6 +21,7 @@ import com.kcode.zhihudaily.utils.LogFactory;
 public class WelcomeActivity extends BaseActivity implements WelcomeContract.View {
 
     private final static L log = LogFactory.create(WelcomeActivity.class);
+    private final static int TIME = 3000;
 
     private ImageView mStartImage;
     private WelcomeContract.Presenter mPresenter;
@@ -69,12 +70,13 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     public void loadImage(String img) {
         log.i(img);
         ImageLoader.getInstance().load(this,img,mStartImage);
+        mStartImage.animate().scaleX(1.12f).scaleY(1.12f).setDuration(2000).setStartDelay(100).start();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mHandler.sendEmptyMessage(0);
             }
-        },3000);
+        },TIME);
     }
 
     @Override

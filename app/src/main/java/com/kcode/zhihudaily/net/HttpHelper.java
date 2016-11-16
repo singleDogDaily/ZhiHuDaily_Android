@@ -1,7 +1,11 @@
 package com.kcode.zhihudaily.net;
 
 import com.kcode.zhihudaily.bean.LatestNews;
+import com.kcode.zhihudaily.bean.Other;
+import com.kcode.zhihudaily.bean.Themes;
 import com.kcode.zhihudaily.bean.Welcome;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.Observer;
@@ -109,6 +113,28 @@ public class HttpHelper {
                 });
 
 
+    }
+
+    public static void getThemes(final Response<List<Other>> response){
+        ApiClient.getClient().getThemes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Themes>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        response.onFailed(e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Themes theme) {
+                        response.onSuccess(theme.getOthers());
+                    }
+                });
     }
 
     /**
