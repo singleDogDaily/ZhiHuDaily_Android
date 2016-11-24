@@ -28,6 +28,10 @@ public interface ZhiHuDailyService {
     @GET("api/4/news/before/{date}")
     Observable<LatestNews> getBeforeNews(@Path("date") String date);
 
+    /**获取对应主题的文章列表*/
+    @GET("api/4/theme/{id}")
+    Observable<Themes> getThemesNews(@Path("id") String id);
+
     /**获取主题列表*/
     @GET("api/4/themes")
     Observable<Themes> getThemes();

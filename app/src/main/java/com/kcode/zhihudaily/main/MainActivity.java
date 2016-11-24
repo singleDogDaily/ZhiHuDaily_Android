@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
     private MenuItem menuItem;
     private SharedPreferences spf;
 
-
+    private DrawerLayout drawer;
     private LinearLayout linearLayout;
 
     private MainFragment fragment;
@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity {
 
         linearLayout = $(R.id.linearLayout);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.title_main, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -84,6 +84,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void bindView() {
 
+    }
+
+    public void closeDrawer(int gravity) {
+        drawer.closeDrawer(gravity);
     }
 
     @Override

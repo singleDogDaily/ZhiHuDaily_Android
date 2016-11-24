@@ -2,7 +2,9 @@ package com.kcode.zhihudaily.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +21,12 @@ import java.util.List;
  * Created by caik on 2016/10/30.
  */
 
-public class NavigationDrawerFragment extends BaseFragment implements NavigationDrawerContract.View{
+public class NavigationDrawerFragment extends BaseFragment implements NavigationDrawerContract.View,NavigationDrawerAdapter.OnNavigationItemClickListener {
 
     private final static L log = LogFactory.create(NavigationDrawerFragment.class);
 
     private RecyclerView mRecyclerView;
+    private NavigationDrawerAdapter mAdapter;
 
     @Nullable
     @Override
@@ -35,17 +38,25 @@ public class NavigationDrawerFragment extends BaseFragment implements Navigation
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new NavigationDrawerAdapter(getContext(),this);
+        mRecyclerView.setAdapter(mAdapter);
 
         new NavigationDrawerPresenter(this);
     }
 
     @Override
     public void setupRecyclerView(List<Other> others) {
-
+        mAdapter.init(others);
     }
 
     @Override
     public void setPresenter(NavigationDrawerContract.Presenter presenter) {
 
+    }
+
+    @Override
+    public void onItemClick(int position, Other other) {
+        ((MainActivity)getActivity()).closeDrawer(Gravity.LEFT);
     }
 }
