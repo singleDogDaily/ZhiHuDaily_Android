@@ -1,5 +1,6 @@
 package com.kcode.zhihudaily.main;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ public class NavigationDrawerFragment extends BaseFragment implements Navigation
 
     private final static L log = LogFactory.create(NavigationDrawerFragment.class);
 
+    private MainActivity mMainActivity;
     private RecyclerView mRecyclerView;
     private NavigationDrawerAdapter mAdapter;
 
@@ -46,6 +48,18 @@ public class NavigationDrawerFragment extends BaseFragment implements Navigation
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mMainActivity = (MainActivity) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mMainActivity = null;
+    }
+
+    @Override
     public void setupRecyclerView(List<Other> others) {
         mAdapter.init(others);
     }
@@ -57,6 +71,7 @@ public class NavigationDrawerFragment extends BaseFragment implements Navigation
 
     @Override
     public void onItemClick(int position, Other other) {
-        ((MainActivity)getActivity()).closeDrawer(Gravity.LEFT);
+        mMainActivity.closeDrawer(Gravity.LEFT);
+        mMainActivity.showThemeFragment(other);
     }
 }

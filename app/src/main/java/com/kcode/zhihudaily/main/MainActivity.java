@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.App;
 import com.kcode.zhihudaily.base.BaseActivity;
+import com.kcode.zhihudaily.bean.Other;
 import com.kcode.zhihudaily.utils.L;
 import com.kcode.zhihudaily.utils.LogFactory;
 
@@ -88,6 +89,22 @@ public class MainActivity extends BaseActivity {
 
     public void closeDrawer(int gravity) {
         drawer.closeDrawer(gravity);
+    }
+
+    public void showThemeFragment(Other other) {
+
+        ThemeFragment themeFragment = (ThemeFragment) getSupportFragmentManager()
+                .findFragmentByTag(ThemeFragment.class.getSimpleName());
+        if (themeFragment == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container,ThemeFragment.newInstance(other),ThemeFragment.class.getSimpleName())
+                    .commit();
+        }else {
+            themeFragment.changeTheme(other);
+        }
+
+
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.kcode.zhihudaily.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by caik on 2016/11/15.
  */
 
-public class Other {
+public class Other implements Serializable{
 
     /**
      * color : 15007
