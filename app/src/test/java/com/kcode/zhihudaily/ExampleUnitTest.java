@@ -1,12 +1,8 @@
 package com.kcode.zhihudaily;
 
-import android.util.Log;
-
-import com.kcode.zhihudaily.utils.DateUtils;
-
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -22,8 +18,4 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
-    public void dateUtils(){
-        Log.i(TAG, DateUtils.getToday());
-    }
 }

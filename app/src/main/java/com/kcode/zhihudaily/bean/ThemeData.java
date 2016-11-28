@@ -1,5 +1,7 @@
 package com.kcode.zhihudaily.bean;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 /**
@@ -79,5 +81,10 @@ public class ThemeData {
 
     public void setEditors(List<Editors> editors) {
         this.editors = editors;
+    }
+
+    public String toJSON(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

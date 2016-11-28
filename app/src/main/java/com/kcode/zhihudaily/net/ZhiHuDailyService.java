@@ -2,6 +2,7 @@ package com.kcode.zhihudaily.net;
 
 
 import com.kcode.zhihudaily.bean.LatestNews;
+import com.kcode.zhihudaily.bean.ThemeData;
 import com.kcode.zhihudaily.bean.Themes;
 import com.kcode.zhihudaily.bean.Welcome;
 
@@ -30,7 +31,7 @@ public interface ZhiHuDailyService {
 
     /**获取对应主题的文章列表*/
     @GET("api/4/theme/{id}")
-    Observable<Themes> getThemesNews(@Path("id") String id);
+    Observable<ThemeData> getThemesNews(@Path("id") int id);
 
     /**获取主题列表*/
     @GET("api/4/themes")

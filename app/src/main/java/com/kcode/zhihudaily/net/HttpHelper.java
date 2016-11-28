@@ -2,6 +2,7 @@ package com.kcode.zhihudaily.net;
 
 import com.kcode.zhihudaily.bean.LatestNews;
 import com.kcode.zhihudaily.bean.Other;
+import com.kcode.zhihudaily.bean.ThemeData;
 import com.kcode.zhihudaily.bean.Themes;
 import com.kcode.zhihudaily.bean.Welcome;
 
@@ -135,6 +136,25 @@ public class HttpHelper {
                         response.onSuccess(theme.getOthers());
                     }
                 });
+    }
+
+    public static void getThemeData(int id, final Response<ThemeData> response) {
+        request(ApiClient.getClient().getThemesNews(id), new Observer<ThemeData>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                response.onFailed(e.toString());
+            }
+
+            @Override
+            public void onNext(ThemeData themeData) {
+                response.onSuccess(themeData);
+            }
+        });
     }
 
     /**

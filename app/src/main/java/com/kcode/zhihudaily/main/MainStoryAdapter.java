@@ -108,9 +108,9 @@ public class MainStoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
-        switch (getItemViewType(position)) {
+        switch (getItemViewType(holder.getAdapterPosition())) {
             case HEADER:
 
                 HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
@@ -157,7 +157,7 @@ public class MainStoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     @Override
                     public void onClick(View v) {
                         if (mListener != null) {
-                            mListener.onItemClick(position);
+                            mListener.onItemClick(holder.getAdapterPosition());
                         }
                     }
                 });

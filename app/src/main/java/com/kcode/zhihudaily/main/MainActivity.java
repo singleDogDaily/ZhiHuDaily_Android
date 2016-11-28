@@ -26,6 +26,7 @@ import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.App;
 import com.kcode.zhihudaily.base.BaseActivity;
 import com.kcode.zhihudaily.bean.Other;
+import com.kcode.zhihudaily.theme.ThemeFragment;
 import com.kcode.zhihudaily.utils.L;
 import com.kcode.zhihudaily.utils.LogFactory;
 
