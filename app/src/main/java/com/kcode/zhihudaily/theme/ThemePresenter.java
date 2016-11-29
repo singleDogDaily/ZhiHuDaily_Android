@@ -31,7 +31,7 @@ public class ThemePresenter implements ThemeContract.Presenter {
         HttpHelper.getThemeData(id, new Response<ThemeData>() {
             @Override
             public void onSuccess(ThemeData themeData) {
-                log.d(themeData.toJSON());
+               mView.setupContent(themeData);
             }
 
             @Override

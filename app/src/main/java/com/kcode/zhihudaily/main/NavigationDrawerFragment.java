@@ -73,5 +73,6 @@ public class NavigationDrawerFragment extends BaseFragment implements Navigation
     public void onItemClick(int position, Other other) {
         mMainActivity.closeDrawer(Gravity.LEFT);
         mMainActivity.showThemeFragment(other);
+        mMainActivity.setToolbarTitle(other.getName());
     }
 }

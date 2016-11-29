@@ -26,6 +26,7 @@ import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.App;
 import com.kcode.zhihudaily.base.BaseActivity;
 import com.kcode.zhihudaily.bean.Other;
+import com.kcode.zhihudaily.setting.SettingsActivity;
 import com.kcode.zhihudaily.theme.ThemeFragment;
 import com.kcode.zhihudaily.utils.L;
 import com.kcode.zhihudaily.utils.LogFactory;
@@ -104,8 +105,6 @@ public class MainActivity extends BaseActivity {
         }else {
             themeFragment.changeTheme(other);
         }
-
-
     }
 
     @Override
@@ -145,8 +144,15 @@ public class MainActivity extends BaseActivity {
                 }
                 refreshUI();
                 break;
+            case R.id.action_settings:
+                start2Setting();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void start2Setting() {
+        startActivity(SettingsActivity.class);
     }
 
     public void setToolbarTitle(String title) {
