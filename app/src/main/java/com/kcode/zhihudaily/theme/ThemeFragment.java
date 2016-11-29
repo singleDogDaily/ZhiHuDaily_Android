@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.BaseFragment;
-import com.kcode.zhihudaily.bean.Editors;
+import com.kcode.zhihudaily.bean.Editor;
 import com.kcode.zhihudaily.bean.Other;
 import com.kcode.zhihudaily.bean.ThemeData;
 import com.kcode.zhihudaily.editor.EditorActivity;
@@ -91,7 +91,7 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View,Th
     }
 
     @Override
-    public void onEditorLayoutClick(List<Editors> editors) {
+    public void onEditorLayoutClick(List<Editor> editors) {
         Intent intent = new Intent(getActivity(), EditorActivity.class);
         Gson gson = new Gson();
         intent.putExtra("editor", gson.toJson(editors));

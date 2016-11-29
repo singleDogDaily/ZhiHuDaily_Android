@@ -4,7 +4,7 @@ package com.kcode.zhihudaily.bean;
  * Created by caik on 2016/11/24.
  */
 
-public class Editors {
+public class Editor {
 
 
     /**

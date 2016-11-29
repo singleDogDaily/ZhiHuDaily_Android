@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kcode.zhihudaily.R;
-import com.kcode.zhihudaily.bean.Editors;
+import com.kcode.zhihudaily.bean.Editor;
 import com.kcode.zhihudaily.bean.Story;
 import com.kcode.zhihudaily.bean.ThemeData;
 import com.kcode.zhihudaily.utils.CommonData;
@@ -92,14 +92,14 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     }
 
-    private void setupEditorLayout(LinearLayout mEditorLayout, final List<Editors> editors) {
+    private void setupEditorLayout(LinearLayout mEditorLayout, final List<Editor> editors) {
         if (editors == null) {
             return;
         }
 
         ImageView circleView;
         mEditorLayout.removeAllViews();
-        for (Editors editor :
+        for (Editor editor :
                 editors) {
             circleView = (ImageView) LayoutInflater.from(mContext).inflate(R.layout.circleview, null);
             ImageLoader.getInstance().loadCircleView(mContext,editor.getAvatar(),circleView);
@@ -157,6 +157,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public interface OnItemClickListener {
         void onItemClick(int position);
 
-        void onEditorLayoutClick(List<Editors> editors);
+        void onEditorLayoutClick(List<Editor> editors);
     }
 }

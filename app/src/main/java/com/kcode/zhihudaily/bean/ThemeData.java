@@ -17,7 +17,7 @@ public class ThemeData {
     private String image;
     private String image_source;
     private List<Story> stories;
-    private java.util.List<Editors> editors;
+    private java.util.List<Editor> editors;
 
     public String getDescription() {
         return description;
@@ -75,11 +75,11 @@ public class ThemeData {
         this.stories = stories;
     }
 
-    public List<Editors> getEditors() {
+    public List<Editor> getEditors() {
         return editors;
     }
 
-    public void setEditors(List<Editors> editors) {
+    public void setEditors(List<Editor> editors) {
         this.editors = editors;
     }
 
