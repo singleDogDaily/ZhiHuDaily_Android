@@ -24,6 +24,8 @@
             android:name=".setting.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
+        <activity android:name=".editor.EditorActivity">
+        </activity>
     </application>
 
 </manifest>

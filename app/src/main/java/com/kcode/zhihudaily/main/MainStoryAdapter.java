@@ -90,10 +90,9 @@ public class MainStoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         switch (viewType) {
             case HEADER:
                 return new HeaderViewHolder(View.inflate(mContext, R.layout.main_header_view, null));
-            case ITEM:
+            default:
                 return new ViewHolder(View.inflate(mContext, R.layout.item_story, null));
         }
-        return new ViewHolder(View.inflate(mContext, R.layout.item_story, null));
     }
 
     @Override
@@ -102,9 +101,9 @@ public class MainStoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case CommonData.HEADER_VIEW:
                 return HEADER;
             default:
-                break;
+                return ITEM;
         }
-        return ITEM;
+
     }
 
     @Override

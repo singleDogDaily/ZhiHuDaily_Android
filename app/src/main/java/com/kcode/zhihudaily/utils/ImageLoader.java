@@ -41,4 +41,10 @@ public class ImageLoader {
     public void load(Fragment fragment, String url, ImageView view){
         Glide.with(fragment).load(url).into(view);
     }
+
+    public void loadCircleView(Context context, String url, ImageView view) {
+        Glide.with(context).load(url)
+        .transform(new GlideCircleTransform(context))
+        .into(view);
+    }
 }

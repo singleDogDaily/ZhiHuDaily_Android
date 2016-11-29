@@ -2,6 +2,6 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
         android:color="#FF848282">
 
-    <item android:drawable="@android:color/white"></item>
+    <item android:drawable="?attr/clockBackground"></item>
 
 </ripple>

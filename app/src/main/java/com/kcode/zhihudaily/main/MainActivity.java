@@ -15,6 +15,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,11 +48,15 @@ public class MainActivity extends BaseActivity {
     private LinearLayout linearLayout;
 
     private MainFragment fragment;
+    private NavigationDrawerFragment navigationDrawerFragment;
+
+    private int currentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        currentId = Other.MAIN_THEME_ID;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.title_main);
         setSupportActionBar(mToolbar);
@@ -71,6 +76,7 @@ public class MainActivity extends BaseActivity {
                 .add(R.id.container, fragment)
                 .commit();
 
+        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         //create presenter
         new MainPresenter(fragment);
     }
@@ -95,6 +101,20 @@ public class MainActivity extends BaseActivity {
 
     public void showThemeFragment(Other other) {
 
+        if (currentId == other.getId()) {
+            return;
+        }
+
+        if (other.getId() == Other.MAIN_THEME_ID) {
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container,fragment)
+                    .commit();
+
+            return;
+        }
+
         ThemeFragment themeFragment = (ThemeFragment) getSupportFragmentManager()
                 .findFragmentByTag(ThemeFragment.class.getSimpleName());
         if (themeFragment == null) {
@@ -105,6 +125,8 @@ public class MainActivity extends BaseActivity {
         }else {
             themeFragment.changeTheme(other);
         }
+
+        currentId = other.getId();
     }
 
     @Override
@@ -186,35 +208,50 @@ public class MainActivity extends BaseActivity {
         TypedValue textColor2 = new TypedValue();//今日热闻字体颜色
         TypedValue barBackground = new TypedValue();//ActionBar背景色
 
-
         Resources.Theme theme = getTheme();
         theme.resolveAttribute(R.attr.clockBackground, background, true);
         theme.resolveAttribute(R.attr.clockTextColor, textColor, true);
         theme.resolveAttribute(R.attr.clockTextColor2, textColor2, true);
         theme.resolveAttribute(R.attr.clockBarBackground, barBackground, true);
 
-
         mToolbar.setBackgroundResource(barBackground.resourceId);
         linearLayout.setBackgroundResource(background.resourceId);
 
-        int childCount = fragment.mRecyclerView.getChildCount();
+        refreshRecyclerView(background, textColor, fragment.mRecyclerView);
+        refreshRecyclerView(background,textColor,navigationDrawerFragment.mRecyclerView);
+
+    }
+
+    private void refreshRecyclerView(TypedValue background,TypedValue textColor,RecyclerView recyclerView) {
+        int childCount = recyclerView.getChildCount();
         for (int i = 0; i < childCount; i++) {
-            ViewGroup childView = (ViewGroup) fragment.mRecyclerView.getChildAt(i);
+            ViewGroup childView = (ViewGroup) recyclerView.getChildAt(i);
             childView.setBackgroundResource(background.resourceId);
             View ll_item_story = childView.findViewById(R.id.ll_item_story);
-            //headerview中的AutoScrollViewPager不需要变色
+            //headerView中的AutoScrollViewPager不需要变色
             if (ll_item_story == null) {
                 continue;
             }
             ll_item_story.setBackgroundResource(background.resourceId);
             TextView tv_time = (TextView) childView.findViewById(R.id.tv_time);
-            tv_time.setTextColor(getResources().getColor(textColor.resourceId));
+            if (tv_time != null) {
+                tv_time.setTextColor(getResources().getColor(textColor.resourceId));
+            }
+
             CardView cardView = (CardView) childView.findViewById(R.id.cardView);
-            cardView.setCardBackgroundColor(background.resourceId);
+            if (cardView != null) {
+                cardView.setCardBackgroundColor(background.resourceId);
+            }
+
             View rl_item_story = childView.findViewById(R.id.rl_item_story);
-            rl_item_story.setBackgroundResource(background.resourceId);
+            if (rl_item_story != null) {
+                rl_item_story.setBackgroundResource(background.resourceId);
+            }
+
             TextView tv_title = (TextView) childView.findViewById(R.id.tv_title);
-            tv_title.setTextColor(getResources().getColor(textColor.resourceId));
+            if (tv_title != null) {
+                tv_title.setTextColor(getResources().getColor(textColor.resourceId));
+            }
         }
 
         //让 RecyclerView 缓存在 Pool 中的 Item 失效
@@ -225,8 +262,8 @@ public class MainActivity extends BaseActivity {
             declaredField.setAccessible(true);
             Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear", (Class<?>[]) new Class[0]);
             declaredMethod.setAccessible(true);
-            declaredMethod.invoke(declaredField.get(fragment.mRecyclerView), new Object[0]);
-            RecyclerView.RecycledViewPool recycledViewPool = fragment.mRecyclerView.getRecycledViewPool();
+            declaredMethod.invoke(declaredField.get(recyclerView), new Object[0]);
+            RecyclerView.RecycledViewPool recycledViewPool = recyclerView.getRecycledViewPool();
             recycledViewPool.clear();
 
         } catch (NoSuchFieldException e) {
@@ -240,7 +277,6 @@ public class MainActivity extends BaseActivity {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
     }
 
     //刷新状态栏
@@ -302,4 +338,12 @@ public class MainActivity extends BaseActivity {
         return bitmap;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(Gravity.LEFT)) {
+            drawer.closeDrawer(Gravity.LEFT);
+            return;
+        }
+        super.onBackPressed();
+    }
 }

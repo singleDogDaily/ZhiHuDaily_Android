@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ public class NavigationDrawerFragment extends BaseFragment implements Navigation
     private final static L log = LogFactory.create(NavigationDrawerFragment.class);
 
     private MainActivity mMainActivity;
-    private RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerView;
     private NavigationDrawerAdapter mAdapter;
 
     @Nullable
@@ -61,6 +62,7 @@ public class NavigationDrawerFragment extends BaseFragment implements Navigation
 
     @Override
     public void setupRecyclerView(List<Other> others) {
+        addMainTheme(others);
         mAdapter.init(others);
     }
 
@@ -74,5 +76,20 @@ public class NavigationDrawerFragment extends BaseFragment implements Navigation
         mMainActivity.closeDrawer(Gravity.LEFT);
         mMainActivity.showThemeFragment(other);
         mMainActivity.setToolbarTitle(other.getName());
+    }
+
+    /**
+     * 加上首页
+     * {@link Other#MAIN_THEME_ID}
+     */
+    private void addMainTheme(List<Other> others) {
+        Other other = new Other();
+        other.setId(Other.MAIN_THEME_ID);
+        other.setName("主页");
+        others.add(0,other);
+    }
+
+    public void refreshUI() {
+        TypedValue background = new TypedValue();//背景色
     }
 }

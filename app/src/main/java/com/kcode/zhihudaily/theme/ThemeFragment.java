@@ -1,5 +1,6 @@
 package com.kcode.zhihudaily.theme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,13 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
+import com.google.gson.Gson;
 import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.BaseFragment;
+import com.kcode.zhihudaily.bean.Editors;
 import com.kcode.zhihudaily.bean.Other;
 import com.kcode.zhihudaily.bean.ThemeData;
-import com.kcode.zhihudaily.utils.ImageLoader;
+import com.kcode.zhihudaily.editor.EditorActivity;
+
+import java.util.List;
 
 /**
  * Created by caik on 2016/11/25.
@@ -25,7 +29,6 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View,Th
 
     private ThemeContract.Presenter mPresenter;
     private Other theme;
-    private ImageView mImgThemeIcon;
     private RecyclerView mRecyclerView;
     private ThemeAdapter mAdapter;
 
@@ -60,7 +63,6 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View,Th
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mImgThemeIcon = (ImageView) view.findViewById(R.id.themeView);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         initRecyclerView();
@@ -70,7 +72,7 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View,Th
 
     private void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new ThemeAdapter(this);
+        mAdapter = new ThemeAdapter(getContext(),this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -89,12 +91,16 @@ public class ThemeFragment extends BaseFragment implements ThemeContract.View,Th
     }
 
     @Override
-    public void setupContent(ThemeData themeData) {
-        setupThemeIcon(themeData.getBackground());
-        mAdapter.init(themeData.getStories());
+    public void onEditorLayoutClick(List<Editors> editors) {
+        Intent intent = new Intent(getActivity(), EditorActivity.class);
+        Gson gson = new Gson();
+        intent.putExtra("editor", gson.toJson(editors));
+        startActivity(intent);
     }
 
-    private void setupThemeIcon(String imageUrl) {
-        ImageLoader.getInstance().load(this,imageUrl,mImgThemeIcon);
+    @Override
+    public void setupContent(ThemeData themeData) {
+        mAdapter.init(themeData.getStories());
+        mAdapter.addHeader(themeData);
     }
 }

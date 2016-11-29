@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class Other implements Serializable{
 
+    //设定主页ID为-1
+    public static final int MAIN_THEME_ID = -9999;
     /**
      * color : 15007
      * thumbnail : http://pic3.zhimg.com/0e71e90fd6be47630399d63c58beebfc.jpg

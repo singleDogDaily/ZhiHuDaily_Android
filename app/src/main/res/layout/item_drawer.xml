@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/ll_item_story"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="?attr/clockBackground"
               android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/name"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:paddingLeft="12dp"
-        android:gravity="center_vertical"
-        android:textSize="16sp"
-        android:paddingRight="5dp"
         android:background="@drawable/selector_item_story"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"/>
+        app:cardBackgroundColor="?attr/clockBackground"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="5dp"
+            android:textSize="16sp"/>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
