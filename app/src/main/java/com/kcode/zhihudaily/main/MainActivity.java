@@ -124,6 +124,11 @@ public class MainActivity extends BaseActivity {
                     .commit();
         }else {
             themeFragment.changeTheme(other);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .hide(fragment)
+                    .show(themeFragment)
+                    .commit();
         }
 
         currentId = other.getId();

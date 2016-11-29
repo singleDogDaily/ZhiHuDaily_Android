@@ -101,9 +101,10 @@ public class ThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mEditorLayout.removeAllViews();
         for (Editor editor :
                 editors) {
-            circleView = (ImageView) LayoutInflater.from(mContext).inflate(R.layout.circleview, null);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.circleview, null);
+            circleView = (ImageView) view.findViewById(R.id.image);
             ImageLoader.getInstance().loadCircleView(mContext,editor.getAvatar(),circleView);
-            mEditorLayout.addView(circleView);
+            mEditorLayout.addView(view);
         }
         mEditorLayout.setOnClickListener(new View.OnClickListener() {
             @Override

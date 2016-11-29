@@ -13,7 +13,7 @@ import java.util.List;
  * Created by caik on 2016/11/29.
  */
 
-public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
+public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> {
 
     private int resource;
     private List<T> data;
@@ -42,11 +42,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Vi
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(resource, parent, false));
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new RecyclerViewHolder(LayoutInflater.from(parent.getContext()).inflate(resource,parent,false));
     }
 
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
         setupViewHolder(holder, data.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,25 +58,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Vi
         });
     }
 
-    public abstract void setupViewHolder(ViewHolder holder, T t);
+    public abstract void setupViewHolder(RecyclerViewHolder holder, T t);
 
     @Override
     public int getItemCount() {
         return data == null ? 0 : data.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final View itemView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            this.itemView = itemView;
-        }
-
-        public <T extends View> T findViewById(int id) {
-            return (T)itemView.findViewById(id);
-        }
     }
 
     public interface OnItemClickListener<T> {
