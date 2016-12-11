@@ -1,7 +1,6 @@
 package com.kcode.zhihudaily.main;
 
 import com.kcode.zhihudaily.bean.LatestNews;
-import com.kcode.zhihudaily.db.RealmHelper;
 import com.kcode.zhihudaily.net.HttpHelper;
 import com.kcode.zhihudaily.net.Response;
 
@@ -57,11 +56,6 @@ public class MainPresenter implements MainContract.Presenter {
                 mView.dismissLoading();
             }
         });
-    }
-
-    @Override
-    public LatestNews loadFromRealm() {
-        return RealmHelper.getInstance().getLatestNews();
     }
 
     @Override

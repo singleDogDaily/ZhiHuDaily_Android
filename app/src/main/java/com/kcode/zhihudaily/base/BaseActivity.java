@@ -18,10 +18,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView();
+        setContentView(getLayoutId());
         bindView();
     }
+
+    protected abstract int getLayoutId();
 
     protected void initToolBar(String msg, final ToolbarOnClickListener listener) {
         Toolbar toolbar = $(R.id.toolbar);
@@ -44,7 +45,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected abstract void setContentView();
 
     protected abstract void bindView();
 

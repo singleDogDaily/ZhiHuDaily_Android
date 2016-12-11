@@ -6,8 +6,6 @@ import android.util.Log;
 
 import com.kcode.zhihudaily.R;
 
-import io.realm.Realm;
-
 /**
  * Created by caik on 2016/10/27.
  */
@@ -45,11 +43,6 @@ public class App extends Application {
             setTheme(R.style.DayTheme);
         }
 
-        initRealm();
-
     }
 
-    private void initRealm(){
-        Realm.init(this);
-    }
 }

@@ -144,7 +144,7 @@ public class MainStoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 ViewHolder viewHolder = (ViewHolder) holder;
                 viewHolder.mTitle.setText(mStories.get(position).getTitle());
-                ImageLoader.getInstance().load(mContext, mStories.get(position).getImages().get(0).value, viewHolder.mIcon);
+                ImageLoader.getInstance().load(mContext, mStories.get(position).getImages().get(0), viewHolder.mIcon);
                 if (TextUtils.isEmpty(mStories.get(position).getDate())) {
                     viewHolder.mDate.setVisibility(View.GONE);
                 }else {

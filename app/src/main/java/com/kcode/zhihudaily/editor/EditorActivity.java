@@ -24,6 +24,13 @@ public class EditorActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initToolBar("主编", new ToolbarOnClickListener() {
+            @Override
+            public void onClick() {
+                finish();
+            }
+        });
+
         String data = getIntent().getStringExtra("editor");
         Gson gson = new Gson();
         editors = gson.fromJson(data, new TypeToken<List<Editor>>() {}.getType());
@@ -41,14 +48,8 @@ public class EditorActivity extends BaseActivity {
     }
 
     @Override
-    protected void setContentView() {
-        setContentView(R.layout.activity_editor);
-        initToolBar("主编", new ToolbarOnClickListener() {
-            @Override
-            public void onClick() {
-                finish();
-            }
-        });
+    protected int getLayoutId() {
+        return R.layout.activity_editor;
     }
 
     @Override

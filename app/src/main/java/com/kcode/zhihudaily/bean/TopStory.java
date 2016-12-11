@@ -1,12 +1,10 @@
 package com.kcode.zhihudaily.bean;
 
-import io.realm.RealmObject;
-
 /**
  * Created by caik on 2016/10/30.
  */
 
-public class TopStory extends RealmObject {
+public class TopStory {
 
     /**
      * image : http://pic3.zhimg.com/f4a178eee2d2b5701f1723ccc6285492.jpg

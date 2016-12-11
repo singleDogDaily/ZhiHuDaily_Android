@@ -34,6 +34,11 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
         new WelcomePresenter(this);
     }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_welcome;
+    }
+
     private void setFullScreen() {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -43,11 +48,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-    }
-
-    @Override
-    protected void setContentView() {
-        setContentView(R.layout.activity_welcome);
     }
 
     @Override

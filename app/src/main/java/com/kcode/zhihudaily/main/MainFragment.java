@@ -1,5 +1,6 @@
 package com.kcode.zhihudaily.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import com.kcode.zhihudaily.R;
 import com.kcode.zhihudaily.base.BaseFragment;
 import com.kcode.zhihudaily.bean.Story;
 import com.kcode.zhihudaily.bean.TopStory;
+import com.kcode.zhihudaily.detail.DetailActivity;
 import com.kcode.zhihudaily.utils.DateUtils;
 import com.kcode.zhihudaily.utils.L;
 import com.kcode.zhihudaily.utils.LogFactory;
@@ -177,6 +179,13 @@ public class MainFragment extends BaseFragment implements MainContract.View,
 
     @Override
     public void onItemClick(int position) {
+        start2Detail(mMainStoryAdapter.getItem(position));
+    }
+
+    private void start2Detail(Story story) {
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra("story", story);
+        startActivity(intent);
 
     }
 

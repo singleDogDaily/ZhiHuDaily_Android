@@ -4,17 +4,14 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-import io.realm.RealmList;
-import io.realm.RealmObject;
-
 /**
  * Created by caik on 2016/10/30.
  */
 
-public class LatestNews extends RealmObject {
+public class LatestNews {
     private String date;
-    private RealmList<Story> stories;
-    private RealmList<TopStory> top_stories;
+    private List<Story> stories;
+    private List<TopStory> top_stories;
 
     public String getDate() {
         return date;
@@ -28,7 +25,7 @@ public class LatestNews extends RealmObject {
         return stories;
     }
 
-    public void setStories(RealmList<Story> stories) {
+    public void setStories(List<Story> stories) {
         this.stories = stories;
     }
 
@@ -36,7 +33,7 @@ public class LatestNews extends RealmObject {
         return top_stories;
     }
 
-    public void setTop_stories(RealmList<TopStory> top_stories) {
+    public void setTop_stories(List<TopStory> top_stories) {
         this.top_stories = top_stories;
     }
 

@@ -56,6 +56,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        spf = getSharedPreferences(App.SPF, MODE_PRIVATE);
+        //初始化主题
+        initTheme();
+
         currentId = Other.MAIN_THEME_ID;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.title_main);
@@ -82,12 +86,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void setContentView() {
-
-        spf = getSharedPreferences(App.SPF, MODE_PRIVATE);
-        //初始化主题
-        initTheme();
-        setContentView(R.layout.activity_main);
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
