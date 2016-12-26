@@ -18,6 +18,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getLayoutId() <= 0) {
+            throw new RuntimeException("布局文件没有指定");
+        }
         setContentView(getLayoutId());
         bindView();
     }
