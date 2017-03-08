@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-
-import com.kcode.zhihudaily.R;
 
 /**
  * Created by caik on 2016/10/27.
@@ -27,27 +26,26 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutId();
 
-    protected void initToolBar(String msg, final ToolbarOnClickListener listener) {
-        Toolbar toolbar = $(R.id.toolbar);
+    protected void initToolBar(int toolbarId,String msg) {
+        Toolbar toolbar = $(toolbarId);
         if (toolbar != null) {
-
             toolbar.setTitle(msg);
-
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onClick();
-                    }
-                }
-            });
-
 
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     protected abstract void bindView();
 
@@ -65,7 +63,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         finish();
     }
 
-    public interface ToolbarOnClickListener {
-        void onClick();
-    }
 }

@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -29,6 +30,7 @@ import com.kcode.zhihudaily.base.BaseActivity;
 import com.kcode.zhihudaily.bean.Other;
 import com.kcode.zhihudaily.setting.SettingsActivity;
 import com.kcode.zhihudaily.theme.ThemeFragment;
+import com.kcode.zhihudaily.utils.ActivityUtils;
 import com.kcode.zhihudaily.utils.L;
 import com.kcode.zhihudaily.utils.LogFactory;
 
@@ -50,7 +52,7 @@ public class MainActivity extends BaseActivity {
     private MainFragment fragment;
     private NavigationDrawerFragment navigationDrawerFragment;
 
-    private int currentId;
+    private int currentId = Other.MAIN_THEME_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +62,9 @@ public class MainActivity extends BaseActivity {
         //初始化主题
         initTheme();
 
-        currentId = Other.MAIN_THEME_ID;
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.title_main);
         setSupportActionBar(mToolbar);
 
-        linearLayout = $(R.id.linearLayout);
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.title_main, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -75,10 +72,7 @@ public class MainActivity extends BaseActivity {
 
         //add fragment
         fragment = MainFragment.newInstance();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.container, fragment)
-                .commit();
+        ActivityUtils.addFragment(getSupportFragmentManager(), fragment, R.id.container);
 
         navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         //create presenter
@@ -92,7 +86,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void bindView() {
-
+        linearLayout = $(R.id.linearLayout);
+        mToolbar = $(R.id.toolbar);
+        drawer = $(R.id.drawer_layout);
     }
 
     public void closeDrawer(int gravity) {
@@ -106,23 +102,16 @@ public class MainActivity extends BaseActivity {
         }
 
         if (other.getId() == Other.MAIN_THEME_ID) {
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container,fragment)
-                    .commit();
-
+            ActivityUtils.addFragment(getSupportFragmentManager(), fragment, R.id.container);
             return;
         }
 
         ThemeFragment themeFragment = (ThemeFragment) getSupportFragmentManager()
                 .findFragmentByTag(ThemeFragment.class.getSimpleName());
         if (themeFragment == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container,ThemeFragment.newInstance(other),ThemeFragment.class.getSimpleName())
-                    .commit();
-        }else {
+            ActivityUtils.replaceFragment(getSupportFragmentManager(),
+                    ThemeFragment.newInstance(other), R.id.container);
+        } else {
             themeFragment.changeTheme(other);
             getSupportFragmentManager()
                     .beginTransaction()
@@ -137,17 +126,12 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.global, menu);
-
         menuItem = menu.findItem(R.id.action_model);
         if (getString(R.string.night_model).equals(spf.getString(App.ACTION_MODEL, getString(R.string.day_model)))) {
             menuItem.setTitle(getString(R.string.day_model));
-            setTheme(R.style.NightTheme);
         } else {
             menuItem.setTitle(getString(R.string.night_model));
-            setTheme(R.style.DayTheme);
         }
-        refreshUI();
-
         return true;
     }
 
@@ -192,17 +176,12 @@ public class MainActivity extends BaseActivity {
         return mToolbar.getTitle().toString();
     }
 
-
     private void initTheme() {
-        if (getString(R.string.night_model).equals(spf.getString(App.ACTION_MODEL, getString(R.string.day_model)))) {
-            log.i("night theme");
-            setTheme(R.style.NightTheme);
-        } else {
-            log.i("day theme");
-            setTheme(R.style.DayTheme);
-        }
+        String currentTheme = spf.getString(App.ACTION_MODEL, getString(R.string.day_model));
+        setTheme(TextUtils.equals(getString(R.string.night_model), currentTheme)
+                ? R.style.NightTheme
+                : R.style.DayTheme);
     }
-
 
     private void refreshUI() {
         showAnimation();
@@ -223,11 +202,11 @@ public class MainActivity extends BaseActivity {
         linearLayout.setBackgroundResource(background.resourceId);
 
         refreshRecyclerView(background, textColor, fragment.mRecyclerView);
-        refreshRecyclerView(background,textColor,navigationDrawerFragment.mRecyclerView);
+        refreshRecyclerView(background, textColor, navigationDrawerFragment.mRecyclerView);
 
     }
 
-    private void refreshRecyclerView(TypedValue background,TypedValue textColor,RecyclerView recyclerView) {
+    private void refreshRecyclerView(TypedValue background, TypedValue textColor, RecyclerView recyclerView) {
         int childCount = recyclerView.getChildCount();
         for (int i = 0; i < childCount; i++) {
             ViewGroup childView = (ViewGroup) recyclerView.getChildAt(i);

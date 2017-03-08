@@ -15,13 +15,7 @@ public class DetailActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        initToolBar("详情", new ToolbarOnClickListener() {
-            @Override
-            public void onClick() {
-                finish();
-            }
-        });
+        initToolBar(R.id.toolbar,"详情");
     }
 
     @Override

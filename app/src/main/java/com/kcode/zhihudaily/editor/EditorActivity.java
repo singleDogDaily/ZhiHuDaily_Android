@@ -24,12 +24,7 @@ public class EditorActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initToolBar("主编", new ToolbarOnClickListener() {
-            @Override
-            public void onClick() {
-                finish();
-            }
-        });
+        initToolBar(R.id.toolbar,"主编");
 
         String data = getIntent().getStringExtra("editor");
         Gson gson = new Gson();
